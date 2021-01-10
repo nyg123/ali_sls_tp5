@@ -18,6 +18,7 @@ class Sls
         'logstore' => '',
         'source' => '',
         'json' => false,
+        'more_info' => true,
         'json_options' => JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
         'time_format' => ' c ',
         'apart_level' => [],
@@ -59,7 +60,7 @@ class Sls
             'msg' => $message,
         ];
         if (!IS_CLI) {
-            if (App::$debug && !$apart) {
+            if ($this->config['more_info'] && !$apart) {
                 if (isset($_SERVER['HTTP_HOST'])) {
                     $data['current_uri'] = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 } else {
