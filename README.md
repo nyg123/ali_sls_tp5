@@ -41,4 +41,4 @@
 
 #### 附录
 1,统计各接口响应时间和错误次数的查询语句，可以生成仪表盘
->*  | SELECT uri as "接口地址", COUNT(*) as "请求数",avg(runtime) as "平均响应时间",max(runtime) as "最大响应时间",count_if(msg like '%[ error ]%') as "错误数",date_format(max(__time__),'%Y-%m-%d %H:%i:%S') as "最近请求" GROUP BY uri ORDER BY "最近请求" DESC  LIMIT 20
+>  `* | SELECT uri as "接口地址", COUNT(*) as "请求数",avg(runtime) as "平均响应时间",max(runtime) as "最大响应时间",count_if(msg like '%[ error ]%') as "错误数",date_format(max(__time__),'%Y-%m-%d %H:%i:%S') as "最近请求" GROUP BY uri ORDER BY "最近请求" DESC  LIMIT 20`
