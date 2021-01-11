@@ -1,6 +1,7 @@
 {
   "name": "nyg/ali_sls_tp5",
   "description": "Aliyun sls log driver for thinkphp 5.0",
+  "keywords": ["Aliyun", "sls", "log", "tp5.0", "thinkphp5"],
   "license": "MIT",
   "authors": [
     {
