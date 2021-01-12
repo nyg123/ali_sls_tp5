@@ -76,6 +76,7 @@ class Sls
             $data['method'] = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
             $data['uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         }
+        $data['is_cli'] = IS_CLI;
         $data['now'] = date($this->config['time_format']);
         $logItem = new \Aliyun_Log_Models_LogItem();
         $logItem->setTime(time());
