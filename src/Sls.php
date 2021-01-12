@@ -71,12 +71,12 @@ class Sls
                 $data['memory_use'] = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
                 $data['file_load'] = count(get_included_files());
             }
-            $data['server'] = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
-            $data['remote'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
-            $data['method'] = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
-            $data['uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+            $data['request_post'] = json_encode($_POST);
         }
-        $data['is_cli'] = IS_CLI ? 1 : 0;
+        $data['server'] = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
+        $data['remote'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+        $data['method'] = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
+        $data['uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         $data['now'] = date($this->config['time_format']);
         $logItem = new \Aliyun_Log_Models_LogItem();
         $logItem->setTime(time());
