@@ -3,6 +3,7 @@
 namespace think\log\driver;
 
 use think\App;
+use GetClientIp;
 
 class Sls
 {
@@ -74,7 +75,10 @@ class Sls
             $data['request_post'] = json_encode($_POST);
         }
         $data['server'] = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
-        $data['remote'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+        $data['remote'] = (new GetClientIp())->getClientIp();
+        if (!$data['remote']) {
+            $data['remote'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+        }
         $data['method'] = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
         $data['uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         $data['now'] = date($this->config['time_format']);

@@ -12,7 +12,8 @@
   "require": {
     "php": ">=7.1",
     "topthink/framework": "^5.0",
-    "tlingc/aliyun-log-sdk": "^1.1"
+    "tlingc/aliyun-log-sdk": "^1.1",
+    "worm/getclientiplib": "^1.0"
   },
   "autoload": {
     "psr-4": {
