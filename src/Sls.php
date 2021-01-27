@@ -48,6 +48,10 @@ class Sls
             } else {
                 $info .= $level;
             }
+            if (strlen($info) > 1024 * 1024) { //如果大于1M进行拆分
+                $this->write($info);
+                $info = '';
+            }
         }
         if ($info) {
             return $this->write($info);
@@ -87,16 +91,26 @@ class Sls
 
         $contents = $this->config['json'] ? ['content' => json_encode($data, $this->config['json_options'])] : $data;
         $logItem->setContents($contents);
-        try {
-            $client = new \Aliyun_Log_Client($this->config['endpoint'], $this->config['access_key_id'], $this->config['access_key_secret']);
-            $req = new \Aliyun_Log_Models_PutLogsRequest($this->config['project'], $this->config['logstore'], $destination, $this->config['source'], [$logItem]);
-            $client->putLogs($req);
-        } catch (\Exception $e) {
-            $path = LOG_PATH . date('Ym') . DS . date('d') . '.log';
-            $dir = dirname($path);
-            !is_dir($dir) && mkdir($dir, 0755, true);
-            return error_log("sls_error:" . $e->getMessage() . "\r\n" . json_encode($data), 3, $path);
+        $tmp = 0;
+        $path = LOG_PATH . date('Ym') . DS . date('d') . '.log';
+        $dir = dirname($path);
+        !is_dir($dir) && mkdir($dir, 0755, true);
+        while (true) {
+            try {
+                $client = new \Aliyun_Log_Client($this->config['endpoint'], $this->config['access_key_id'],
+                    $this->config['access_key_secret']);
+                $req = new \Aliyun_Log_Models_PutLogsRequest($this->config['project'], $this->config['logstore'],
+                    $destination, $this->config['source'], [$logItem]);
+                $client->putLogs($req);
+                return true;
+            } catch (\Exception $e) {
+                $tmp++;
+                error_log("sls_error:" . $e->getMessage(), 3, $path);
+            }
+            if ($tmp > 3) {
+                error_log(json_encode($data), 3, $path);
+                return false;
+            }
         }
-        return true;
     }
 }

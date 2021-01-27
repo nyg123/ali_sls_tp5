@@ -1,7 +1,13 @@
 {
   "name": "nyg/ali_sls_tp5",
   "description": "Aliyun sls log driver for thinkphp 5.0",
-  "keywords": ["Aliyun", "sls", "log", "tp5.0", "thinkphp5"],
+  "keywords": [
+    "Aliyun",
+    "sls",
+    "log",
+    "tp5.0",
+    "thinkphp5"
+  ],
   "license": "MIT",
   "authors": [
     {
@@ -13,7 +19,8 @@
     "php": ">=7.1",
     "topthink/framework": "^5.0",
     "tlingc/aliyun-log-sdk": "^1.1",
-    "worm/getclientiplib": "^1.0"
+    "worm/getclientiplib": "^1.0",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {
